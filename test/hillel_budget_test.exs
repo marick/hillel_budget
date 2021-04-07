@@ -51,4 +51,21 @@ defmodule HillelBudgetTest do
     @tag :skip
     test "category with total"
   end
+
+
+  # ----------------------------------------------------------------------------
+
+  # Note that these are normalized items. Getting close to wanting
+  # a structure. Heck, let's do it.
+  def item(cost, categories) do
+    %{cost: cost, categories: categories}
+  end
+
+  # I realized that budget really belongs here
+  def budget(total_limit) do
+    %{total_limit: total_limit}
+  end
+
+  
+  
 end
