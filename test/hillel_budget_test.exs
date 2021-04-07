@@ -22,11 +22,14 @@ defmodule HillelBudgetTest do
     end
   end
 
-  describe "debiting of categories" do
-    test "debit of existing category" do
-      actual = remaining_category_total_after_bill(%{cat: 10}, :cat, 8)
-      assert actual == %{cat: 2}
+  test "debiting of categories" do
+    expect = fn [categories, category, amount], expected ->
+      actual = remaining_category_total_after_bill(categories, category, amount)
+      assert actual == expected
     end
+
+    [%{category: 10}, :category, 8] |> expect.(%{category:  2})
+    [%{category: 10}, :MISMATCH, 8] |> expect.(%{category: 10})
   end
 
   describe "total budget alone" do 

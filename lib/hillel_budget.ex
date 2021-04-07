@@ -11,7 +11,12 @@ defmodule HillelBudget do
   # The similarities between the following and the above give me a cunning plan!
   # But first make it work.
   def remaining_category_total_after_bill(categories, category, bill_amount) do
-    Map.update!(categories, category, &(&1 - bill_amount))
+    case Map.has_key?(categories, category) do
+      true ->
+        Map.update!(categories, category, &(&1 - bill_amount))
+      false ->
+        categories
+    end
   end
 
   def can_afford?(budget, bill) do
