@@ -19,4 +19,23 @@ defmodule HillelBudget.LimitHolder do
         holder
     end
   end
+
+  # It's probably simpler, in terms of code, to generate all
+  # combinations of a bill, then apply them to a a single
+  # holder/budget. However, doing things breadth first is more
+  # efficient and (I speculate) gives property-based testing more
+  # opportunities to find bugs. Because it's pruning a search tree at the
+  # same time it's being generated
+
+  def apply_item(holders, item) do
+    case item.categories do
+      [] ->
+        holders
+      categories ->
+        Enum.flat_map(categories, fn category ->
+          for holder <- holders, do: decrement(holder, category, item.cost)
+        end)
+        |> Enum.reject(&(&1 == :overdrawn))
+    end
+  end
 end
