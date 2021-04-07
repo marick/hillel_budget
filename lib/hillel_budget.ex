@@ -1,4 +1,6 @@
 defmodule HillelBudget do
+  alias HillelBudget.Item
+  
   def remaining_total_after_bill(limit, bill) do
     item_charges = for item <- bill do
       count = Map.get(item, :count, 1)
@@ -17,21 +19,11 @@ defmodule HillelBudget do
     end
   end
 
+  # Interesting. I failed to normalize the bill. 
+
   def can_afford?(budget, bill) do
-    remaining_total_after_bill(budget.total_limit, bill) >= 0
+    items = Item.normalize(bill)
+    remaining_total_after_bill(budget.total_limit, items) >= 0
   end
 
-  def normalize(item) when is_map(item) do
-    cost = item.cost
-    categories = Map.get(item, :categories, [])
-    count = Map.get(item, :count, 1)
-
-    Enum.map(1..count, fn _ ->
-      %{cost: cost, categories: categories}
-    end)
-  end
-
-  def normalize(bill) when is_list(bill) do
-    Enum.flat_map(bill, &normalize/1)
-  end
 end
