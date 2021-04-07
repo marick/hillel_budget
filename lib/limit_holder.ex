@@ -9,7 +9,12 @@ defmodule HillelBudget.LimitHolder do
   def decrement(holder, key, amount) do
     case Map.has_key?(holder, key) do
       true ->
-        Map.update!(holder, key, &(&1 - amount))
+        new_balance = Map.get(holder, key) - amount
+        if new_balance < 0 do
+          :overdrawn
+        else
+          Map.put(holder, key, new_balance)
+        end
       false ->
         holder
     end
