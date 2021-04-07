@@ -22,7 +22,12 @@ defmodule HillelBudgetTest do
     end
   end
 
-  
+  describe "debiting of categories" do
+    test "debit of existing category" do
+      actual = remaining_category_total_after_bill(%{cat: 10}, :cat, 8)
+      assert actual == %{cat: 2}
+    end
+  end
 
   describe "total budget alone" do 
     test "total budget boundaries" do

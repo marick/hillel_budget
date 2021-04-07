@@ -8,6 +8,12 @@ defmodule HillelBudget do
     limit - Enum.sum(item_charges)
   end
 
+  # The similarities between the following and the above give me a cunning plan!
+  # But first make it work.
+  def remaining_category_total_after_bill(categories, category, bill_amount) do
+    Map.update!(categories, category, &(&1 - bill_amount))
+  end
+
   def can_afford?(budget, bill) do
     remaining_total_after_bill(budget.total_limit, bill) >= 0
   end
