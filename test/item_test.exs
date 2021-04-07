@@ -8,12 +8,14 @@ defmodule HillelBudget.ItemTest do
       expect = fn bill, expected ->
         assert Item.normalize(bill) == expected
       end
+
+      c = 535 # This represents some random cost.
       
-      %{cost: "c"}                    |> expect.([item("c", [        ])])
-      %{cost: "c", categories: ["a"]} |> expect.([item("c", ["a"     ])])
-      %{cost: "c", categories: ["a", "b"], count: 2}
-                                      |> expect.([item("c", ["a", "b"]),
-                                                  item("c", ["a", "b"])])
+      %{cost: c}                    |> expect.([item(c, [        ])])
+      %{cost: c, categories: ["a"]} |> expect.([item(c, [:a     ])])
+      %{cost: c, categories: ["a", "b"], count: 2}
+                                    |> expect.([item(c, [:a, :b]),
+                                                item(c, [:a, :b])])
     end
     
     test "normalizing bills" do
