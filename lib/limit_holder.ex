@@ -1,4 +1,5 @@
 defmodule HillelBudget.LimitHolder do
+  alias HillelBudget.Item
 
   @moduledoc """
   A limit-holder is a map of key-value pairs where the pairs are
@@ -27,15 +28,14 @@ defmodule HillelBudget.LimitHolder do
   # opportunities to find bugs. Because it's pruning a search tree at the
   # same time it's being generated
 
+
+  def apply_item(holders, %Item{categories: []}), do: holders
+
   def apply_item(holders, item) do
-    case item.categories do
-      [] ->
-        holders
-      categories ->
-        Enum.flat_map(categories, fn category ->
-          for holder <- holders, do: decrement(holder, category, item.cost)
-        end)
-        |> Enum.reject(&(&1 == :overdrawn))
-    end
+    item.categories
+    |> Enum.flat_map(fn category ->
+        for holder <- holders, do: decrement(holder, category, item.cost)
+       end)
+    |> Enum.reject(&(&1 == :overdrawn))
   end
 end
