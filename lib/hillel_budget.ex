@@ -10,20 +10,8 @@ defmodule HillelBudget do
     limit - Enum.sum(item_charges)
   end
 
-  def remaining_category_total_after_bill(categories, category, bill_amount) do
-    case Map.has_key?(categories, category) do
-      true ->
-        Map.update!(categories, category, &(&1 - bill_amount))
-      false ->
-        categories
-    end
-  end
-
-  # Interesting. I failed to normalize the bill. 
-
   def can_afford?(budget, bill) do
     items = Item.normalize(bill)
     remaining_total_after_bill(budget.total_limit, items) >= 0
   end
-
 end
