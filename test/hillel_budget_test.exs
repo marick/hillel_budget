@@ -1,45 +1,45 @@
 defmodule HillelBudgetTest do
   use ExUnit.Case
 
-  def total_charge(bill) do
+  # Next step, I'll be working on debiting from categories, so I should treat the
+  # total the same way.
+  
+  def remaining_total_after_bill(limit, bill) do
     item_charges = for item <- bill do
       count = Map.get(item, :count, 1)
       item.cost * count
     end
       
-    Enum.sum(item_charges)
+    limit - Enum.sum(item_charges)
   end
 
   def can_afford?(budget, bill) do
-    total_charge(bill) <= budget.total_limit
+    remaining_total_after_bill(budget.total_limit, bill) >= 0
   end
 
   def budget(total_limit) do
     %{total_limit: total_limit}
   end
 
-  # After beginning to work on categories, I decided I didn't want to
-  # have to keep hassling with counts, so add a "normalization" step
-  # to clean the data.
-  #
-  # Besides, I'm guessing this will make things easier later on.
+  # I noticed that I'd gotten my terminology messed up, using "bills and bill"
+  # instead of "bill and item"
 
-  def normalize(bill) when is_map(bill) do
-    cost = bill.cost
-    categories = Map.get(bill, :categories, [])
-    count = Map.get(bill, :count, 1)
+  def normalize(item) when is_map(item) do
+    cost = item.cost
+    categories = Map.get(item, :categories, [])
+    count = Map.get(item, :count, 1)
 
     Enum.map(1..count, fn _ ->
       %{cost: cost, categories: categories}
     end)
   end
 
-  def normalize(bills) when is_list(bills) do
-    Enum.flat_map(bills, &normalize/1)
+  def normalize(bill) when is_list(bill) do
+    Enum.flat_map(bill, &normalize/1)
   end
 
   describe "normalization" do
-    test "normalizing a bill" do
+    test "normalizing a single item" do
       expect = fn bill, expected ->
         assert normalize(bill) == expected
       end
@@ -58,7 +58,7 @@ defmodule HillelBudgetTest do
     end
   end
 
-  describe "total budget" do 
+  describe "total budget alone" do 
     test "total budget boundaries" do
       bill = [%{cost: 50}]
       
