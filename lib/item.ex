@@ -14,5 +14,11 @@ defmodule HillelBudget.Item do
   def normalize(bill) when is_list(bill) do
     Enum.flat_map(bill, &normalize/1)
   end
+
+  # This could go in `normalize`, but it's about optimization and I prefer
+  # all that be done in one place.
+  def favor_fewer_categories(bill) do
+    Enum.sort(bill, &(length(&1.categories) <= length(&2.categories)))
+  end
 end
 

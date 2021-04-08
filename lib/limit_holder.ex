@@ -39,10 +39,22 @@ defmodule HillelBudget.LimitHolder do
     |> Enum.reject(&(&1 == :overdrawn))
   end
 
-  # The flipping of the arguments to apply_item may suggests that some
-  # or all of this code belongs in `Item`?
-
+  # Normally, these optimizations would wait to see if they're needed, but
+  # let's give PBT more to chew on.
+  # 1. sort items with fewer categories to the front. (postpone splitting)
+  # 2. stop short when there are no holders left, even if there are items left.
+  
+  
   def surviving_holders(holders, items) do
-    Enum.reduce(items, holders, fn item, acc -> apply_item(acc, item) end)
+    optimized_holders = Item.favor_fewer_categories(holders)
+    
+    Enum.reduce_while(items, optimized_holders, fn item, acc ->
+      # The flipping of the arguments to apply_item may suggests that some
+      # or all of this code belongs in `Item`?
+      case apply_item(acc, item) do
+        [] -> {:halt, []}
+        next_acc -> {:cont, next_acc}
+      end
+    end)
   end
 end

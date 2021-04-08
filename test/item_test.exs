@@ -23,4 +23,14 @@ defmodule HillelBudget.ItemTest do
       assert actual == [item(20, []), item(20, [])]
     end
   end
+
+  test "sorting fewer category items to the front" do
+    one = item(1, [])
+    two = item(2, [:a])
+    three = item(3, [:a, :b])
+    four = item(4, [:a, :b, :c])
+    
+    actual = Item.favor_fewer_categories([four, two, one, three])
+    assert actual == [one, two, three, four]
+  end
 end

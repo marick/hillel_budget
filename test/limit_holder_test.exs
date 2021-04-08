@@ -90,6 +90,21 @@ defmodule HillelBudget.LimitHolderTest do
           %{cat_a: 5, cat_b: 0},
         ]))
     end
+
+    # This tests a boundary for the optimization
+    test "a case where all the holders are discarded before all items used" do
+      original = [%{cat_a: 10, cat_b: 10}]
+      
+      # Demonstrate emptiness
+      items = [item(10, [:cat_a]),
+               item(5, [:cat_a, :cat_b]),
+               item(6, [:cat_b])]
+      
+      assert [] = LimitHolder.surviving_holders(original, items)
+
+      more_items = items ++ [item(5, [:cat_a, :cat_b])]
+      assert [] = LimitHolder.surviving_holders(original, more_items)
+    end
   end
-end  
+end
 
