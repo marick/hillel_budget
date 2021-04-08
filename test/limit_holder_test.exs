@@ -4,9 +4,6 @@ defmodule HillelBudget.LimitHolderTest do
   import HillelBudget.Item, only: [item: 2]
   use FlowAssertions
 
-  # Forgive me, Bertrand Meyer, but combining the update and the query
-  # seems to make handling missing keys easier.
-
   describe "debiting of values" do
     expect = fn [holder, key, amount], expected ->
       assert LimitHolder.decrement(holder, key, amount) == expected
@@ -21,12 +18,9 @@ defmodule HillelBudget.LimitHolderTest do
   end
 
   describe "applying items to a collection of holders" do
-    test "the easy category cases: 0 or 1" do
+    test "the easy category cases (0 or 1) require no splitting" do
       original = [%{category: 10}]
-      
-      expect = fn item, expected ->
-        assert LimitHolder.apply_item(original, item) == expected
-      end
+      expect = &(assert LimitHolder.apply_item(original, &1) == &2)
 
       # cases that do not apply
       item(10, [     ]) |> expect.(original)
@@ -40,16 +34,9 @@ defmodule HillelBudget.LimitHolderTest do
 
     test "the cases that require splitting" do
       original = [%{cat_a: 10, cat_b: 10}]
-      
-      expect = fn item, expected ->
-        assert LimitHolder.apply_item(original, item) == expected
-      end
+      expect = &(assert LimitHolder.apply_item(original, &1) == &2)
 
-      # cases that do not apply
-      item(10, [     ]) |> expect.(original)
-      item(10, [:miss]) |> expect.(original)
-
-      # the need to split
+      # the need to split (3) compared to no need (1 and 2)
       item(10, [:cat_a])         |> expect.([%{cat_a:  0, cat_b: 10}])
       item(10, [:cat_b])         |> expect.([%{cat_a: 10, cat_b:  0}])
       item(10, [:cat_a, :cat_b]) |> expect.([%{cat_a:  0, cat_b: 10},
@@ -63,45 +50,41 @@ defmodule HillelBudget.LimitHolderTest do
   end
 
   describe "surviving holders" do 
-    test "surviving holders" do
+    test "a step-by-step example" do
       original = [%{cat_a: 10, cat_b: 10}]
+      steps = &(LimitHolder.surviving_holders(original, &1))
       
       one = item(5, [:cat_a])
-      one_step = LimitHolder.surviving_holders(original, [one])
-      
-      assert one_step == [%{cat_a: 5, cat_b: 10}]
+      assert steps.([one]) == [%{cat_a: 5, cat_b: 10}]
       
       two = item(5, [:cat_a, :cat_b])
-      two_step = LimitHolder.surviving_holders(original, [one, two])
-      
-      assert_good_enough(two_step,
+      assert_good_enough(steps.([one, two]),
         in_any_order([
           %{cat_a: 0, cat_b: 10},
           %{cat_a: 5, cat_b: 5}
         ]))
 
       three = item(5, [:cat_a, :cat_b])
-      three_step = LimitHolder.surviving_holders(original, [one, two, three])
-      
-      assert_good_enough(three_step,
+      assert_good_enough(steps.([one, two, three]),
         in_any_order([
-          # Note that this duplicate instance is removed: %{cat_a: 0, cat_b: 5},
+          # Note that a duplicate instance of the following is removed.
           %{cat_a: 0, cat_b: 5},
           %{cat_a: 5, cat_b: 0},
         ]))
     end
 
-    # This tests a boundary for the optimization
+    # This exercises a boundary in the optimized version that would not
+    # be one in the straightforward one.
     test "a case where all the holders are discarded before all items used" do
       original = [%{cat_a: 10, cat_b: 10}]
       
-      # Demonstrate emptiness
+      # Demonstrate emptiness with three steps
       items = [item(10, [:cat_a]),
                item(5, [:cat_a, :cat_b]),
                item(6, [:cat_b])]
-      
       assert [] = LimitHolder.surviving_holders(original, items)
 
+      # More steps change nothing.
       more_items = items ++ [item(5, [:cat_a, :cat_b])]
       assert [] = LimitHolder.surviving_holders(original, more_items)
     end

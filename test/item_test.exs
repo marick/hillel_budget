@@ -11,11 +11,12 @@ defmodule HillelBudget.ItemTest do
 
       c = 535 # This represents some random cost.
       
-      %{cost: c}                    |> expect.([item(c, [        ])])
-      %{cost: c, categories: ["a"]} |> expect.([item(c, [:a     ])])
-      %{cost: c, categories: ["a", "b"], count: 2}
-                                    |> expect.([item(c, [:a, :b]),
-                                                item(c, [:a, :b])])
+      %{cost: c}                         |> expect.([item(c, [      ])])
+      %{cost: c, categories: ["a"]}      |> expect.([item(c, [:a    ])])
+      %{cost: c, categories: ["a", "b"],
+        count: 2}
+                                         |> expect.([item(c, [:a, :b]),
+                                                     item(c, [:a, :b])])
     end
     
     test "normalizing bills" do
@@ -24,11 +25,11 @@ defmodule HillelBudget.ItemTest do
     end
   end
 
-  test "sorting fewer category items to the front" do
-    one = item(1, [])
-    two = item(2, [:a])
+  test "sorting items with fewer categories to the front" do
+    one =   item(1, [])
+    two =   item(2, [:a])
     three = item(3, [:a, :b])
-    four = item(4, [:a, :b, :c])
+    four =  item(4, [:a, :b, :c])
     
     actual = Item.favor_fewer_categories([four, two, one, three])
     assert actual == [one, two, three, four]

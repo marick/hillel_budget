@@ -7,6 +7,9 @@ defmodule HillelBudget.LimitHolder do
   negative if spending has exceeded the limit.
   """
 
+  # Forgive me, Bertrand Meyer, but combining the update and the query
+  # seems to make handling missing keys easier.
+
   def decrement(holder, key, amount) do
     case Map.has_key?(holder, key) do
       true ->
@@ -23,11 +26,10 @@ defmodule HillelBudget.LimitHolder do
 
   # It's probably simpler, in terms of code, to generate all
   # combinations of a bill, then apply them to a a single
-  # holder/budget. However, doing things breadth first is more
+  # holder/budget. However, doing things breadth first can be made more
   # efficient and (I speculate) gives property-based testing more
-  # opportunities to find bugs. Because it's pruning a search tree at the
-  # same time it's being generated
-
+  # opportunities to find bugs. Because pruning a search tree at the
+  # same time it's being generated is more complicated.
 
   def apply_item(holders, %Item{categories: []}), do: holders
 
@@ -41,9 +43,9 @@ defmodule HillelBudget.LimitHolder do
 
   # Normally, these optimizations would wait to see if they're needed, but
   # let's give PBT more to chew on.
-  # 1. sort items with fewer categories to the front. (postpone splitting)
-  # 2. stop short when there are no holders left, even if there are items left.
-  
+  # 1. Sort items with fewer categories to the front. (postpone splitting)
+  # 2. Stop short when there are no holders left, even if there are items left.
+  # 3. Delete duplicate holders so they don't generate duplicate trees.
   
   def surviving_holders(holders, items) when is_list(holders) do
     optimized_holders = Item.favor_fewer_categories(holders)
