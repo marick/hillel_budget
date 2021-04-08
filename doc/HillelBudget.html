@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.24.2">
+    <meta name="project" content="hillel_budget v0.1.0">
+
+    <title>HillelBudget — hillel_budget v0.1.0</title>
+    <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
+
+    <script src="dist/sidebar_items-b44d83c76d.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-f27ff079945e43879c46.js"></script>
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <span class="icon-search" aria-hidden="true" title="Submit search"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <span class="icon-cross" aria-hidden="true" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="api-reference.html" class="sidebar-projectName">
+hillel_budget
+      </a>
+      <strong class="sidebar-projectVersion">
+        v0.1.0
+      </strong>
+    </div>
+
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+      <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+      <h1>
+HillelBudget <small class="app-vsn">(hillel_budget v0.1.0)</small>
+
+      </h1>
+
+
+
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#can_afford?/2">can_afford?(budget, items)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>A solution to Hillel Wayne's <a href="https://gist.github.com/hwayne/e5a65b48ab50a2285de47cfc11fc955f">PBT / Example Testing comparison problem</a></p></div>
+
+</div>
+
+  </div>
+
+        </section>
+
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="can_afford?/2">
+
+  <div class="detail-header">
+    <a href="#can_afford?/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">can_afford?(budget, items)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>A solution to Hillel Wayne's <a href="https://gist.github.com/hwayne/e5a65b48ab50a2285de47cfc11fc955f">PBT / Example Testing comparison problem</a></p><h2 id="can_afford?/2-examples" class="section-heading">
+  <a href="#can_afford?/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+<p>The following is allowed because the cost of 2 can be assigned to
+category b:</p><pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">budget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9437974023-1">%{</span><span class="ss">total_limit</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="ss">category_limits</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9437974023-2">%{</span><span class="ss">a</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">b</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="9437974023-2">}</span><span class="p" data-group-id="9437974023-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">bill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9437974023-3">[</span><span class="p" data-group-id="9437974023-4">%{</span><span class="ss">cost</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">categories</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9437974023-5">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p" data-group-id="9437974023-5">]</span><span class="p" data-group-id="9437974023-4">}</span><span class="p" data-group-id="9437974023-3">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">can_afford?</span><span class="p" data-group-id="9437974023-6">(</span><span class="n">budget</span><span class="p">,</span><span class="w"> </span><span class="n">bill</span><span class="p" data-group-id="9437974023-6">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1">##############################################################</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># You might think the following would blow the budget for `b`:</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">bill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="9437974023-7">[</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9437974023-8">%{</span><span class="ss">cost</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">categories</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9437974023-9">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p" data-group-id="9437974023-9">]</span><span class="p" data-group-id="9437974023-8">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="9437974023-10">%{</span><span class="ss">cost</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">count</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">categories</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9437974023-11">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;b&quot;</span><span class="p" data-group-id="9437974023-11">]</span><span class="p" data-group-id="9437974023-10">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="9437974023-7">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># ... but:</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">can_afford?</span><span class="p" data-group-id="9437974023-12">(</span><span class="n">budget</span><span class="p">,</span><span class="w"> </span><span class="n">bill</span><span class="p" data-group-id="9437974023-12">)</span><span class="w">
+</span><span class="no">true</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1">#</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># To see what&#39;s going on, use `affordability` instead of</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="c1"># `can_afford?`</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="c1">#</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">affordability</span><span class="p" data-group-id="9437974023-13">(</span><span class="n">budget</span><span class="p">,</span><span class="w"> </span><span class="n">bill</span><span class="p" data-group-id="9437974023-13">)</span><span class="w">
+</span><span class="p" data-group-id="9437974023-14">{</span><span class="no">true</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Total budget remaining: 1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Possible category budget allocations follow&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9437974023-15">[</span><span class="p" data-group-id="9437974023-16">%{</span><span class="ss">a</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="ss">b</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="9437974023-16">}</span><span class="p" data-group-id="9437974023-15">]</span><span class="p" data-group-id="9437974023-14">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1">#</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># So the sequence of events was:</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># 1. 2 was deducted from `b`, leaving {a: 1, b: 1}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># 2. 1 was deducted from both &#39;a&#39; and &#39;b&#39;. That is, the two separate</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1">#     counts were treated separately.</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1">#</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1">##############################################################</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># A further item with no categories won&#39;t break the budget, though it will</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># reduce the total down to 0:</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">affordability</span><span class="p" data-group-id="9437974023-17">(</span><span class="n">budget</span><span class="p">,</span><span class="w"> </span><span class="n">bill</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="p" data-group-id="9437974023-18">[</span><span class="p" data-group-id="9437974023-19">%{</span><span class="ss">cost</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p" data-group-id="9437974023-19">}</span><span class="p" data-group-id="9437974023-18">]</span><span class="p" data-group-id="9437974023-17">)</span><span class="w">
+</span><span class="p" data-group-id="9437974023-20">{</span><span class="no">true</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Total budget remaining: 0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Possible category budget allocations follow&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9437974023-21">[</span><span class="p" data-group-id="9437974023-22">%{</span><span class="ss">a</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="ss">b</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="9437974023-22">}</span><span class="p" data-group-id="9437974023-21">]</span><span class="p" data-group-id="9437974023-20">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1">#</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1">##############################################################</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># But putting that final wafer-thin charge into a category instead</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1"># of no category will (at last!) break the budget.</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="c1">#</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">can_afford?</span><span class="p" data-group-id="9437974023-23">(</span><span class="n">budget</span><span class="p">,</span><span class="w"> </span><span class="n">bill</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="p" data-group-id="9437974023-24">[</span><span class="p" data-group-id="9437974023-25">%{</span><span class="ss">cost</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">categories</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="9437974023-26">[</span><span class="s">&quot;a&quot;</span><span class="p" data-group-id="9437974023-26">]</span><span class="p" data-group-id="9437974023-25">}</span><span class="p" data-group-id="9437974023-24">]</span><span class="p" data-group-id="9437974023-23">)</span><span class="w">
+</span><span class="no">false</span></code></pre><p>Here's a larger example of a budget. Note that some items might refer
+to categories without budgets.</p><pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">budget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8659263340-1">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">total_limit</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="ss">category_limits</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8659263340-2">%{</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">food</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">rent</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">    </span><span class="ss">candles</span><span class="p">:</span><span class="w"> </span><span class="mi">49</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8659263340-2">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="8659263340-1">}</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">bill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="8659263340-3">[</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8659263340-4">%{</span><span class="ss">cost</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p" data-group-id="8659263340-4">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8659263340-5">%{</span><span class="ss">cost</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">count</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p" data-group-id="8659263340-5">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8659263340-6">%{</span><span class="ss">cost</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">categories</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8659263340-7">[</span><span class="s">&quot;food&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;gym&quot;</span><span class="p" data-group-id="8659263340-7">]</span><span class="p" data-group-id="8659263340-6">}</span><span class="p">,</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="w">  </span><span class="p" data-group-id="8659263340-8">%{</span><span class="ss">cost</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">count</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="ss">categories</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="8659263340-9">[</span><span class="s">&quot;transit&quot;</span><span class="p" data-group-id="8659263340-9">]</span><span class="p" data-group-id="8659263340-8">}</span><span class="w">
+</span><span class="gp unselectable">...&gt; </span><span class="p" data-group-id="8659263340-3">]</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">HillelBudget</span><span class="o">.</span><span class="n">can_afford?</span><span class="p" data-group-id="8659263340-10">(</span><span class="n">budget</span><span class="p">,</span><span class="w"> </span><span class="n">bill</span><span class="p" data-group-id="8659263340-10">)</span><span class="w">
+</span><span class="no">true</span></code></pre>
+  </section>
+</section>
+
+          </div>
+        </section>
+
+      <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.24.2) for the
+            <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
+          </span>
+          <span class="line">
+            Designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+
+            <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button night-mode-toggle">
+            Toggle night mode
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+          <button class="line footer-button tooltips-toggle">
+            <span class="tooltips-option-disable">Disable tooltips</span>
+            <span class="tooltips-option-enable">Enable tooltips</span>
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+  </body>
+</html>

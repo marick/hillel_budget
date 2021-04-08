@@ -9,64 +9,64 @@ defmodule HillelBudget do
 
   The following is allowed because the cost of 2 can be assigned to
   category b:
-
-  iex> budget = %{total_limit: 5, category_limits: %{a: 1, b: 3}}
-  iex> bill = [%{cost: 2, categories: ["a", "b"]}]
-  iex> can_afford?(budget, bill)
-  true
-  iex> ##############################################################
-  iex> # You might think the following would blow the budget for `b`:
-  iex> bill = [
-  ...>   %{cost: 2, categories: ["a", "b"]},
-  ...>   %{cost: 1, count: 2, categories: ["a", "b"]}
-  ...> ]
-  iex> # ... but:
-  iex> can_afford?(budget, bill)
-  true
-  iex> #
-  iex> # To see what's going on, use `affordability` instead of
-  ...> # `can_afford?`
-  ...> #
-  iex> affordability(budget, bill)
-  {true, "Total budget remaining: 1", "Possible category budget allocations follow", [%{a: 0, b: 0}]}
-  iex> #
-  iex> # So the sequence of events was:
-  iex> # 1. 2 was deducted from `b`, leaving {a: 1, b: 1}
-  iex> # 2. 1 was deducted from both 'a' and 'b'. That is, the two separate
-  iex> #     counts were treated separately.
-  iex> #
-  iex> ##############################################################
-  iex> # A further item with no categories won't break the budget, though it will
-  iex> # reduce the total down to 0:
-  iex> affordability(budget, bill ++ [%{cost: 1}])
-  {true, "Total budget remaining: 0", "Possible category budget allocations follow", [%{a: 0, b: 0}]}
-  iex> #
-  iex> ##############################################################
-  iex> # But putting that final wafer-thin charge into a category instead
-  iex> # of no category will (at last!) break the budget.
-  iex> #
-  iex> can_afford?(budget, bill ++ [%{cost: 1, categories: ["a"]}])
-  false
-
+    
+      iex> budget = %{total_limit: 5, category_limits: %{a: 1, b: 3}}
+      iex> bill = [%{cost: 2, categories: ["a", "b"]}]
+      iex> can_afford?(budget, bill)
+      true
+      iex> ##############################################################
+      iex> # You might think the following would blow the budget for `b`:
+      iex> bill = [
+      ...>   %{cost: 2, categories: ["a", "b"]},
+      ...>   %{cost: 1, count: 2, categories: ["a", "b"]}
+      ...> ]
+      iex> # ... but:
+      iex> can_afford?(budget, bill)
+      true
+      iex> #
+      iex> # To see what's going on, use `affordability` instead of
+      ...> # `can_afford?`
+      ...> #
+      iex> affordability(budget, bill)
+      {true, "Total budget remaining: 1", "Possible category budget allocations follow", [%{a: 0, b: 0}]}
+      iex> #
+      iex> # So the sequence of events was:
+      iex> # 1. 2 was deducted from `b`, leaving {a: 1, b: 1}
+      iex> # 2. 1 was deducted from both 'a' and 'b'. That is, the two separate
+      iex> #     counts were treated separately.
+      iex> #
+      iex> ##############################################################
+      iex> # A further item with no categories won't break the budget, though it will
+      iex> # reduce the total down to 0:
+      iex> affordability(budget, bill ++ [%{cost: 1}])
+      {true, "Total budget remaining: 0", "Possible category budget allocations follow", [%{a: 0, b: 0}]}
+      iex> #
+      iex> ##############################################################
+      iex> # But putting that final wafer-thin charge into a category instead
+      iex> # of no category will (at last!) break the budget.
+      iex> #
+      iex> can_afford?(budget, bill ++ [%{cost: 1, categories: ["a"]}])
+      false
+    
   Here's a larger example of a budget. Note that some items might refer
   to categories without budgets.
-
-  iex> budget = %{
-  ...>   total_limit: 50,
-  ...>   category_limits: %{
-  ...>     food: 10,
-  ...>     rent: 11,
-  ...>     candles: 49
-  ...>   }
-  ...> }
-  iex> bill = [
-  ...>   %{cost: 5},
-  ...>   %{cost: 1, count: 3},
-  ...>   %{cost: 2, categories: ["food", "gym"]},
-  ...>   %{cost: 1, count: 2, categories: ["transit"]}
-  ...> ]
-  iex> HillelBudget.can_afford?(budget, bill)
-  true
+    
+      iex> budget = %{
+      ...>   total_limit: 50,
+      ...>   category_limits: %{
+      ...>     food: 10,
+      ...>     rent: 11,
+      ...>     candles: 49
+      ...>   }
+      ...> }
+      iex> bill = [
+      ...>   %{cost: 5},
+      ...>   %{cost: 1, count: 3},
+      ...>   %{cost: 2, categories: ["food", "gym"]},
+      ...>   %{cost: 1, count: 2, categories: ["transit"]}
+      ...> ]
+      iex> HillelBudget.can_afford?(budget, bill)
+      true
   """
   def can_afford?(budget, items) do
     case affordability(budget, items) do
