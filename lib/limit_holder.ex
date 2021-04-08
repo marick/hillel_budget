@@ -45,7 +45,7 @@ defmodule HillelBudget.LimitHolder do
   # 2. stop short when there are no holders left, even if there are items left.
   
   
-  def surviving_holders(holders, items) do
+  def surviving_holders(holders, items) when is_list(holders) do
     optimized_holders = Item.favor_fewer_categories(holders)
     
     Enum.reduce_while(items, optimized_holders, fn item, acc ->
@@ -53,8 +53,10 @@ defmodule HillelBudget.LimitHolder do
       # or all of this code belongs in `Item`?
       case apply_item(acc, item) do
         [] -> {:halt, []}
-        next_acc -> {:cont, next_acc}
+        next_acc -> {:cont, Enum.uniq(next_acc)}
       end
     end)
   end
+
+  def surviving_holders(holder, items), do: surviving_holders([holder], items)
 end

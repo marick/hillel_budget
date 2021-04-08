@@ -85,7 +85,7 @@ defmodule HillelBudget.LimitHolderTest do
       
       assert_good_enough(three_step,
         in_any_order([
-          %{cat_a: 0, cat_b: 5},
+          # Note that this duplicate instance is removed: %{cat_a: 0, cat_b: 5},
           %{cat_a: 0, cat_b: 5},
           %{cat_a: 5, cat_b: 0},
         ]))
