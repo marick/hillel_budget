@@ -17,18 +17,17 @@ defmodule HillelBudgetTest do
     end
   end
 
-  describe "interaction of limits" do
-    @tag :skip
-    test "category with total"
-  end
+  describe "running out of categories" do
+    test "total budget boundaries" do
+      budget = budget(100, a: 5)
+      bill = [%{cost: 20, categories: ["a"]}]
 
+      refute can_afford?(budget, bill)
+    end
+  end
   # ----------------------------------------------------------------------------
 
-
-  def budget(total_limit) do
-    %{total_limit: total_limit}
+  def budget(total_limit, categories \\ []) do
+    %{total_limit: total_limit, category_limits: Map.new(categories)}
   end
-
-  
-  
 end
