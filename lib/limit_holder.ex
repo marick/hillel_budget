@@ -38,4 +38,11 @@ defmodule HillelBudget.LimitHolder do
        end)
     |> Enum.reject(&(&1 == :overdrawn))
   end
+
+  # The flipping of the arguments to apply_item may suggests that some
+  # or all of this code belongs in `Item`?
+
+  def surviving_holders(holders, items) do
+    Enum.reduce(items, holders, fn item, acc -> apply_item(acc, item) end)
+  end
 end

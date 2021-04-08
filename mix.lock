@@ -1,0 +1,3 @@
+%{
+  "flow_assertions": {:hex, :flow_assertions, "0.6.1", "04d85ffe5735213cc1132056bb83351148a802b9e9c23178e925cd857dd42939", [:mix], [], "hexpm", "33c6a9bc6c3ff5c16243439a447ab2c8d60d88fa47d2c90bd6b6583f81c07ffc"},
+}

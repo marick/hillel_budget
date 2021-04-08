@@ -2,6 +2,7 @@ defmodule HillelBudget.LimitHolderTest do
   use ExUnit.Case
   alias HillelBudget.LimitHolder
   import HillelBudget.Item, only: [item: 2]
+  use FlowAssertions
 
   # Forgive me, Bertrand Meyer, but combining the update and the query
   # seems to make handling missing keys easier.
@@ -58,6 +59,36 @@ defmodule HillelBudget.LimitHolderTest do
       item(11, [:cat_a])         |> expect.([])
       item(11, [:cat_b])         |> expect.([])
       item(11, [:cat_a, :cat_b]) |> expect.([])
+    end
+  end
+
+  describe "surviving holders" do 
+    test "surviving holders" do
+      original = [%{cat_a: 10, cat_b: 10}]
+      
+      one = item(5, [:cat_a])
+      one_step = LimitHolder.surviving_holders(original, [one])
+      
+      assert one_step == [%{cat_a: 5, cat_b: 10}]
+      
+      two = item(5, [:cat_a, :cat_b])
+      two_step = LimitHolder.surviving_holders(original, [one, two])
+      
+      assert_good_enough(two_step,
+        in_any_order([
+          %{cat_a: 0, cat_b: 10},
+          %{cat_a: 5, cat_b: 5}
+        ]))
+
+      three = item(5, [:cat_a, :cat_b])
+      three_step = LimitHolder.surviving_holders(original, [one, two, three])
+      
+      assert_good_enough(three_step,
+        in_any_order([
+          %{cat_a: 0, cat_b: 5},
+          %{cat_a: 0, cat_b: 5},
+          %{cat_a: 5, cat_b: 0},
+        ]))
     end
   end
 end  
